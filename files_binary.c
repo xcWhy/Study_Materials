@@ -11,10 +11,12 @@ int main()
 
 
     // fgetpos
-    // fseek
+    // fseek - if successful, the function returns 0
     // fsetpos
     // ftell
     // rewind
+
+    // fread_elements = fread(void* ptr, size, count, FILE* stream); void* ptr - is the dynamic array will be using to store the elements
 
 
     // iskame da namerim goleminata na file -> s fseek namirame kraq na faila i tam ni se postavq kursora
