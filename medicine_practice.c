@@ -118,6 +118,34 @@ int save_medicines_in_file(medicine* meds, int meds_count, float min_price, floa
 }
 
 
+void delete_medicine_obj(medicine** meds, int* meds_count, char* name, char* expire_date)
+{
+    int found = 0;
+
+    for (int i = 0; i < meds_count; i++)
+    {
+        if (strcmp((*meds)[i].name, name) == 0 && strcmp((*meds)[i].expiration, expire_date) == 0) // (*meds)[i].name and *meds[i].name = *(meds[i].name)
+        {
+            found = 1;
+            
+            for (int j = i; j < meds_count-1; j++)
+            {
+                (*meds)[j] = (*meds)[j+1];
+            }
+
+            printf("The medicine was found! And successfully deleted!");
+        }
+    }
+
+    if (found)
+    {
+        *meds_count -= 1;
+        *meds = realloc(*meds, (*meds_count) * sizeof(medicine)); //
+    }
+
+    else printf("The medicine was not found!");
+}
+
 
 int main()
 {   
@@ -162,6 +190,13 @@ int main()
         fclose(fpb);
         return 1;
     }
+
+    delete_medicine_obj(&medicines, &medicine_struct_objects, "Aspirin", "05.2025");
+    // 1. davame pametta kydeto medicines masiv promenlivata sedi koqto E I POINTER 
+    // zatova kogato pravim funkciqta osven *za da napravim promenlivata tam da vzeme addressa, ni trqbva VTORA *,
+    // za da osven da dostypim pametta na medicines masiv promenlivata DA DOSTYPIM i neinite stoinosti vytre 
+    // 2. &medicine_struct_objects - the counter, davame mu adresa, zashtoto vse pak triem element ot dinamichen masiv =>
+    // iskame da promenim che ot 4 lekarstva stavat na 3 lekarstva v samata promenliva -> davame adresa i kydeto skladira tazi stoinost 
 
     fclose(fpb);
     free(medicines);
