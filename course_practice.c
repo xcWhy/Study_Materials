@@ -78,3 +78,18 @@ int main()
 }
 
 
+//2 zad
+void promotion_course(course** courses, int courses_count, int index)
+{
+    if (courses_count <= index)
+    {
+        printf("Invalid course index!");
+    }
+
+    else
+    {
+        (*courses)[index].price -= (*courses)[index].price / 10;
+        printf("%.2fлв. - %s - %s", (*courses)[index].price, (*courses)[index].name, (*courses)[index].start_date);
+    }
+}
+
