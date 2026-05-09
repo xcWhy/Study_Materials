@@ -25,6 +25,10 @@ int main()
     // toi ne e chetim -> zatova trqbva da go proverim i prebroim po tozi nachin
 
 
+    // fscanf() - reads formatted data from the stream
+    // fprintf(FILE* stream, "text %s", vars for the text) - za printirane vyv fail
+
+
 
     return 0;
 }

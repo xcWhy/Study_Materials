@@ -84,7 +84,38 @@ medicine* filter_medicines(medicine* arr, int count, char exp_date[]) //exp_date
 
 
 //zad 3 funkciq
+int save_medicines_in_file(medicine* meds, int meds_count, float min_price, float max_price)
+{
+    FILE* fp;
 
+    fp = fopen("offer.txt", "a+");
+    if (!fp)
+    {
+        printf("Error creating / opening file offer.txt!");
+        return 0;
+    }
+
+    int saved_meds = 0;
+
+    for (int i = 0; i < meds_count; i++)
+    {
+        if (meds[i].price >= min_price && meds[i].price <= max_price)
+        {
+            if (fprintf(fp, "%s\n%s\n%lld\n%.2fleva\n\n", meds[i].name, meds[i].expiration, meds[i].id, meds[i].price) < 0) // zashtoto
+                                                                            // on success, the total number of characters written is returned
+            {
+                printf("Error writing in offer.txt file!");
+                fclose(fp);
+                return 0;
+            }
+
+            saved_meds++;
+        }
+    }
+
+    fclose(fp);
+    return saved_meds;
+}
 
 
 
