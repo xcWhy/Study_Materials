@@ -79,7 +79,7 @@ int main()
 
 
 //2 zad
-void promotion_course(course** courses, int courses_count, int index)
+void promotion_course(course* courses, int courses_count, int index)
 {
     if (courses_count <= index)
     {
@@ -88,8 +88,43 @@ void promotion_course(course** courses, int courses_count, int index)
 
     else
     {
-        (*courses)[index].price -= (*courses)[index].price / 10;
-        printf("%.2fлв. - %s - %s", (*courses)[index].price, (*courses)[index].name, (*courses)[index].start_date);
+        courses[index].price -= courses[index].price / 10;
+        printf("%.2fлв. - %s - %s", courses[index].price, courses[index].name, courses[index].start_date);
     }
 }
 
+//3 zad
+int save_courses(course* courses, int courses_count, float min_price, float max_price)
+{
+    FILE* fp;
+    int saved_courses = 0;
+
+    fp = fopen("offer.txt", "a"); // ili w
+    if (!fp)
+    {
+        printf("Error opening file offer.txt!");
+        return 0;
+    }
+
+    for (int i = 0; i < courses_count; i++)
+    {
+        if (courses[i].price > min_price && courses[i].price < max_price)
+        {
+            if (fprintf(fp, "%s\n%s\n%d лекции\n%.2fлв.\n\n", courses[i].name, courses[i].start_date, courses[i].lectures, courses[i].price) < 0)
+            { // BE CAREFUL ITS FPRINTF NOT FSCANF
+                printf("Error wrting in offer.txt!");
+                fclose(fp);
+                return 0;
+            }
+            else saved_courses++;
+            
+        }
+    }
+
+    fclose(fp);
+
+    return saved_courses;
+
+}
+
+//
