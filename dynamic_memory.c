@@ -32,7 +32,9 @@ int main()
         printf("%d ", *(ptr+i));
     }
 
-    ptr = realloc (ptr, (n+2) * sizeof(int)); // we add 2 bytes to the allocated memory
+    ptr = realloc (ptr, (n+2) * sizeof(int)); // we add 2 bytes to the allocated memory AND the bytes information to it !! by using ptr
+                                            // the function may move the memory block to a new location -> the content of the block is preserved
+                                            // it returns a pointer to its beginning
 
     printf("\nInput 2 more values in the memory: \n");
     for (int i = n; i < n+2; i++)

@@ -127,4 +127,44 @@ int save_courses(course* courses, int courses_count, float min_price, float max_
 
 }
 
-//
+//4 zad
+course* delete_course(course** courses, int* courses_count, char* course_name, char* course_start_date)
+{
+    int found = 0;
+
+    for (int i = 0; i < *courses_count; i++)
+    {
+        if (strcmp((*courses)[i].name, course_name) == 0 && strcmp((*courses)[i].start_date, course_start_date) == 0)
+        {
+            found = 1;
+
+            for (int j = i; j < (*courses_count)-1; j++)
+            {
+                (*courses)[j] = (*courses)[j+1];
+            }
+
+            break;
+        }
+    }
+
+    if (found)
+    {
+        *courses_count -= 1;
+
+        course* temp = realloc(*courses, (*courses_count) * sizeof(course));
+        if (!temp)
+        {
+            printf("Error allocating memory after deleting a course!");
+            return NULL;
+        }
+
+        *courses = temp; // we make *courses point to the NEW memory location with the data
+        
+        return *courses; // we return the beginning of the changed array of data (*courses = 0x4 -> 0x4v2)
+        
+    }
+
+    else return NULL;
+
+
+}
