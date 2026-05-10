@@ -132,3 +132,35 @@ treatment* add_new_treatment(treatment** treatments, int* treatments_count)
                         
 
 }
+
+//4 zad
+int write_text_file(treatment* treatments, int treatments_count, char diagnosis[])
+{
+    FILE* fp;
+
+    int saved_illnesses = 0;
+
+    fp = fopen("illness.txt", "w"); // if we are always going through the same array, there will be duplicates in the file, better with w
+    if (!fp)
+    {
+        printf("Error opening file illness.txt!");
+        return 0;
+    }
+
+    for (int i = 0; i < treatments_count; i++)
+    {
+        if (strcmp(treatments[i].diagnosis, diagnosis) == 0)
+        {
+            if (fprintf(fp, "Болничен престой на %s\nза лечение на %s\n%sг.\n\n", treatments[i].patient_name, treatments[i].diagnosis, treatments[i].date) < 0)
+            {
+                printf("Error writing in file illness.txt!");
+                fclose(fp);
+                return 0;
+            }
+            saved_illnesses++;
+        }
+    }
+
+    fclose(fp); // dont forget to close the file before returning
+    return saved_illnesses;
+}
