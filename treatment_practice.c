@@ -88,3 +88,47 @@ int count_treatment(treatment* treatments, int treatments_count, char patient_na
 
     return found_patient_diagnosis;
 }
+
+//3 zad
+treatment* add_new_treatment(treatment** treatments, int* treatments_count)
+{
+    treatment new_treatment;
+
+    printf("id na epikriza: ");
+    scanf("%d", &new_treatment.id);
+
+    getchar(); // gets the next character from stdin, in our case would be \n , it returns the value of the chaaracter it has gotten
+    
+    printf("date: ");
+    fgets(new_treatment.date, sizeof(new_treatment.date), stdin);
+
+    printf("patien name: ");
+    fgets(new_treatment.patient_name, sizeof(new_treatment.patient_name), stdin);
+
+    printf("diagnosis: ");
+    fgets(new_treatment.diagnosis, sizeof(new_treatment.diagnosis), stdin);
+    
+
+    treatment* temp = realloc(*treatments, ((*treatments_count)+1) * sizeof(treatment)); // *treatments !! - i must reallocate the actual dynamic array
+                                                                                // not its actual address, but the address its pointing at
+                                                                                // i need to reallocate it into the new var temp
+    if (!temp)
+    {
+        printf("Error allocating memory!");
+        return NULL;
+    }
+
+    *treatments_count += 1; // we put treatments_count AFTER the allocation, if it messes up, the treatment counts is incremented anyways
+
+    *treatments = temp; // adresyt na pametta s dannite se premestil, prehvyrlqme pyrviq ukazatel, kym pyrviq element - treatments da sochi kym nego
+                        // temp e adresyt na pyrviq element (otkydeto zapochva zadelenata pamet za elementite)
+                        // treatements* e poleto s value - i v sluchaq e adres, adres koito trqbva da sochi otkyde zapochva pametta s dannite
+                        
+    (*treatments)[(*treatments_count)-1] = new_treatment;
+    
+    return *treatments; // vryshtame pokazatel kym pyrviq element na masiva s danni, (*treatments)
+                        // not treatments - that just returns the address of the pointer - where the pointer is staying in the memory
+                        // we need to return where its pointing to - the start of the array with struct elements
+                        
+
+}
