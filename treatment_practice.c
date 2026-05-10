@@ -71,3 +71,20 @@ int main()
     free(history);
     return 0;
 }
+
+
+//2 zad
+int count_treatment(treatment* treatments, int treatments_count, char patient_name[], char diagnosis[])
+{
+    int found_patient_diagnosis = 0;
+
+    for (int i = 0; i < treatments_count; i++)
+    {
+        if (strcmp(treatments[i].patient_name, patient_name) == 0 && strcmp(treatments[i].diagnosis, diagnosis) == 0)
+        {
+            found_patient_diagnosis++;
+        }
+    }
+
+    return found_patient_diagnosis;
+}
